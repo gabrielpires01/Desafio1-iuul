@@ -42,8 +42,8 @@ let v1 = new Vertice(1,1)
 let v2 = new Vertice(4,5)
 let v3 = new Vertice(1,1)
 
-console.log(v1.equal(v3))
-console.log(v1.distance(v2))
-v1.move()
-console.log(v1.vertice)
+//console.log(v1.equal(v3))
+//console.log(v1.distance(v2))
+//v1.move()
+//console.log(v1.vertice)
 

@@ -1,5 +1,4 @@
-// import prompt from "prompt-sync"
-import Vertice from "./questao1.js";
+import { Vertice } from "./questao1.js";
 
 const types = {
     1: "Escaleno",
@@ -7,14 +6,29 @@ const types = {
     3: "Equilátero",
 };
 
-class Triangle {
+export class Triangle {
     #v1;
     #v2;
     #v3;
 
-    constructor(v1, v2, v3) {
-        if (this.#validate_triangle(v1,v2,v3)) {
-            throw Error("Not a triangle");
+    constructor(default_v1, default_v2, default_v3) {
+        if (default_v1 && default_v2 && default_v3) {
+            this.#v1 = default_v1;
+            this.#v2 = default_v2;
+            this.#v3 = default_v3;
+            return
+        }
+        let v1, v2, v3
+        while (true) {
+            console.log("Vertice 1:");
+            v1 = new Vertice();
+            console.log("Vertice 2:");
+            v2 = new Vertice();
+            console.log("Vertice 3:");
+            v3 = new Vertice();
+            if (!this.#validate_triangle(v1,v2,v3)) {
+                break
+            }
         }
         this.#v1 = v1;
         this.#v2 = v2;
@@ -79,20 +93,17 @@ class Triangle {
     }
 }
 
-let v1 = new Vertice(0, 0);
-let v2 = new Vertice(3, 4);
-let v3 = new Vertice(3, 0);
-
-const tri1 = new Triangle(v1, v2, v3);
-
-let v4 = new Vertice(1, 1);
-let v5 = new Vertice(4, 5);
-let v6 = new Vertice(2, 2);
-
-const tri2 = new Triangle(v4, v5, v6);
-
-const tri3 = tri2.clone();
-
-//console.log(tri1.area)
-//console.log(tri1.type())
-//console.log(tri2.equals(tri3))
+//console.log("Questão 2:")
+//console.log("Triangulo 1:")
+//const tri1 = new Triangle();
+//console.log("Triangulo 2:")
+//const tri2 = new Triangle();
+//
+//console.log("Triangulo 3 clone do Triangulo 2")
+//const tri3 = tri2.clone();
+//
+//console.log("Area Triangulo 1: " + tri1.area)
+//console.log("Tipo Triangulo 1: " + tri1.type())
+//console.log("Triangulo 2 == Triangulo 3: " + tri2.equals(tri3))
+//
+//console.log("Fim da Questão 2")

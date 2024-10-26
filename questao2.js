@@ -6,16 +6,32 @@ const types = {
     3: "Equilátero",
 };
 
-export class Triangle {
-    #v1;
-    #v2;
-    #v3;
+export class BasePolygon {
+    get sides() {
+        const sides = [];
+        this.vertices.forEach((vertice, index) => {
+            const prev_sides = this.vertices.slice(index + 1, this.vertices.length);
+            prev_sides.forEach((vertice2) => {
+                sides.push(vertice.distance(vertice2));
+            });
+        });
+        return sides;
+    }
 
-    constructor(default_v1, default_v2, default_v3) {
-        if (default_v1 && default_v2 && default_v3) {
-            this.#v1 = default_v1;
-            this.#v2 = default_v2;
-            this.#v3 = default_v3;
+    get perimeter() {
+        const sides = this.sides;
+
+        return sides.reduce((acc, cur) => acc + cur, 0);
+    }
+}
+
+export class Triangle  extends BasePolygon {
+    #vertices
+
+    constructor(default_vertices) {
+        super();
+        if (default_vertices?.length === 3) {
+            this.#vertices = default_vertices;
             return
         }
         let v1, v2, v3
@@ -30,10 +46,7 @@ export class Triangle {
                 break
             }
         }
-        this.#v1 = v1;
-        this.#v2 = v2;
-        this.#v3 = v3;
-        this.sides = this.#sides();
+        this.#vertices = [v1, v2, v3];
     }
 
     #validate_triangle(v1, v2, v3) {
@@ -44,22 +57,6 @@ export class Triangle {
         );
     }
 
-    #sides() {
-        const lado_a = this.#v1.distance(this.#v2);
-        const lado_b = this.#v1.distance(this.#v3);
-        const lado_c = this.#v3.distance(this.#v2);
-        return [lado_a, lado_b, lado_c];
-    }
-
-    get perimeter() {
-        const sides = this.sides;
-
-        return sides.reduce((acc, cur) => acc + cur, 0);
-    }
-
-    get vertices() {
-        return [this.#v1, this.#v2, this.#v3];
-    }
 
     get area() {
         const sides = this.sides;
@@ -89,7 +86,7 @@ export class Triangle {
     }
 
     clone() {
-        return new Triangle(this.#v1, this.#v2, this.#v3);
+        return new Triangle(this.#vertices);
     }
 }
 
@@ -101,7 +98,7 @@ export class Triangle {
 //
 //console.log("Triangulo 3 clone do Triangulo 2")
 //const tri3 = tri2.clone();
-//
+
 //console.log("Area Triangulo 1: " + tri1.area)
 //console.log("Tipo Triangulo 1: " + tri1.type())
 //console.log("Triangulo 2 == Triangulo 3: " + tri2.equals(tri3))
